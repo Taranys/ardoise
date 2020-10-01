@@ -47,7 +47,7 @@ jobs:
         env:
           RAILS_ENV: test
         with:
-          build: bin/rake db:create db:schema:load
-          start: bin/rails server -e test -p 5017
-          wait-on: 'http://localhost:5017'
+          build: rake db:create db:schema:load
+          start: rails server -d
+          wait-on: 'http://localhost:3000'
           command: 'yarn cypress open --project ./spec'
