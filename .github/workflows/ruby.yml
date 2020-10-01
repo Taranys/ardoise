@@ -48,6 +48,6 @@ jobs:
           RAILS_ENV: test
         with:
           build: rake db:create db:schema:load
-          start: rails server -d
+          start: rails server -p 5017
           wait-on: 'http://localhost:3000'
           command: 'yarn cypress open --project ./spec'
