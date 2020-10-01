@@ -31,3 +31,21 @@ jobs:
       run: bundle install
     - name: Run tests
       run: bundle exec rake
+  
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+        with:
+          ruby-version: 2.7.0
+      - name: Install dependencies
+        run: bundle install
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: RAILS_ENV=test bin/rake db:create db:schema:load
+          start: bin/rails server -e test -p 5017
+          wait-on: 'http://localhost:5017'
+          command: 'yarn cypress open --project ./spec'
