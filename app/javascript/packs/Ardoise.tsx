@@ -1,15 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-
-function Hello({ name = 'React' }) {
-  return (
-    <div>Hello {name}</div>
-  )
-}
+import { render } from 'react-dom'
+import { App } from './Ardoise/App'
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Hello />,
+  render(
+    <App />,
     document.body.appendChild(document.createElement('div')),
   )
 })
