@@ -26,9 +26,11 @@ jobs:
     # uses: ruby/setup-ruby@v1
       uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
       with:
-        ruby-version: 2.7.0
+        ruby-version: 2.7.1
     - name: Install dependencies
       run: bundle install
+    - name: Install Web dependencies
+      run: yarn install --frozen-lockfile
     - name: Run tests
       run: bundle exec rake
   
@@ -39,7 +41,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
         with:
-          ruby-version: 2.7.0
+          ruby-version: 2.7.1
       - name: Install dependencies
         run: bundle install
       - name: Cypress run
