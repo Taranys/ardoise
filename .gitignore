@@ -36,3 +36,4 @@
 node_modules
 spec/cypress/videos
 public/packs
+public/packs-test
