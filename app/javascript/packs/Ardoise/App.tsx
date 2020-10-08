@@ -7,7 +7,7 @@ export function App() {
   return (
     <div id="root">
       <aside>
-        <Menu/>
+        <Menu />
       </aside>
       <section>
         {/* <Header></Header>
