@@ -1,6 +1,8 @@
 import React from 'react'
 import { Menu } from './Menu/Menu'
 
+import "./App.scoped.scss"
+
 export function App() {
   return (
     <div id="root">
