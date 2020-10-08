@@ -1,6 +1,6 @@
 import React from 'react'
 
-import "./Menu.scoped.scss"
+import './Menu.scoped.scss'
 
 export function Menu() {
   return (
