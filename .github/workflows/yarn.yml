@@ -1,10 +1,10 @@
-name: Yarn
+name: Front
 
 on: [push]
 
 jobs:
   lint:
-    name: Front Lint
+    name: linter
 
     runs-on: ubuntu-latest
     
