@@ -15,8 +15,18 @@ on:
 
 jobs:
   unit-test:
-
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11.6-alpine
+        env:
+          POSTGRES_DB: ardoise_test
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -31,11 +41,24 @@ jobs:
       run: bundle install
     - name: Install Web dependencies
       run: yarn install --frozen-lockfile
+    - name: Prepare db
+      run: rails db:setup
     - name: Run tests
       run: bundle exec rake
   
   e2e-test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11.6-alpine
+        env:
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
@@ -44,6 +67,10 @@ jobs:
           ruby-version: 2.7.1
       - name: Install dependencies
         run: bundle install
+      - name: Install Web dependencies
+        run: yarn install --frozen-lockfile
+      - name: Prepare db
+        run: rails db:setup
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
