@@ -29,23 +29,36 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
-      with:
-        ruby-version: 2.7.1
-    - name: Install dependencies
-      run: bundle install
-    - name: Install Web dependencies
-      run: yarn install --frozen-lockfile
-    - name: Prepare db
-      run: rails db:setup
-    - name: Run tests
-      run: bundle exec rake
-  
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Set up Ruby
+      # uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+        with:
+          ruby-version: 2.7.1
+
+      - uses: c-hive/gha-yarn-cache@v1
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Install Web dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Prepare db
+        run: bundle exec rails db:setup
+
+      - name: Run tests
+        run: bundle exec rake
+    
   e2e-test:
     runs-on: ubuntu-latest
 
@@ -61,20 +74,36 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
       - name: Set up Ruby
+      # uses: ruby/setup-ruby@v1
         uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
         with:
           ruby-version: 2.7.1
+
       - name: Install dependencies
-        run: bundle install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - uses: c-hive/gha-yarn-cache@v1
       - name: Install Web dependencies
         run: yarn install --frozen-lockfile
+
       - name: Prepare db
-        run: rails db:setup
+        run: bundle exec rails db:setup
+
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: rake db:create db:schema:load
-          start: rails server -p 5017
+          build: bundle exec rake db:create db:schema:load
+          start: bundle exec rails server -p 5017
           wait-on: 'http://localhost:5017'
           command: 'yarn cypress run --project ./spec'
