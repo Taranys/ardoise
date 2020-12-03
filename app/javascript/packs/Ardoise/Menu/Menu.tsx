@@ -1,16 +1,19 @@
 import React from 'react'
 
-import { useCreateCategory } from './Menu.hook'
+import { useCategories } from './Menu.hook'
 
 import './Menu.scoped.scss'
 
 export function Menu() {
-  const [createCategory, { loading }] = useCreateCategory()
+  const { categories, createCategory, loading } = useCategories()
 
   return (
     <section id="main-menu">
-      <h1>Ardoise</h1>
-      <div id="categories" />
+      <div id="categories">
+        {categories.map((categ) => (
+          <ul key={categ.id}>{categ.name}</ul>
+        ))}
+      </div>
       <button type="button" onClick={createCategory} disabled={loading}>+</button>
     </section>
   )

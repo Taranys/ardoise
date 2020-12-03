@@ -21,6 +21,7 @@ module.exports = {
         '@typescript-eslint',
     ],
     rules: {
+        'jsx-a11y/anchor-is-valid': 'off',
         'max-len': ['error', { code: 120 }],
         'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
         'import/prefer-default-export': 'off',

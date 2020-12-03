@@ -2,5 +2,10 @@
 Rails.application.routes.draw do
   get 'home/index'
 
+  scope '/api' do
+    get '/categories', to: 'categories#all'
+    post '/categories', to: 'categories#create'
+  end
+
   root 'home#index'
 end
