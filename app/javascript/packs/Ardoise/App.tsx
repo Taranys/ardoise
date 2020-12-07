@@ -1,4 +1,6 @@
 import React from 'react'
+
+import { Navbar } from './Navbar/Navbar'
 import { Menu } from './Menu/Menu'
 
 import './App.scoped.scss'
@@ -6,13 +8,8 @@ import './App.scoped.scss'
 export function App() {
   return (
     <div id="root">
-      <aside>
-        <Menu />
-      </aside>
-      <section>
-        {/* <Header></Header>
-        <Content></Content> */}
-      </section>
+      <Navbar />
+      <Menu />
     </div>
   )
 }

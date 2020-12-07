@@ -3,7 +3,10 @@
   width: 100%;
 
   display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: 20% 1fr;
+  grid-template-rows: auto 1fr;
+
+  > nav {
+    grid-column: 1 / -1
+  }
 }

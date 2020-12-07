@@ -39,8 +39,7 @@ jobs:
             ${{ runner.os }}-gems-
 
       - name: Set up Ruby
-      # uses: ruby/setup-ruby@v1
-        uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.1
 
@@ -83,10 +82,10 @@ jobs:
             ${{ runner.os }}-gems-
 
       - name: Set up Ruby
-      # uses: ruby/setup-ruby@v1
-        uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.1
+          bundler-cache: true
 
       - name: Install dependencies
         run: |
