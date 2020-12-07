@@ -11,7 +11,7 @@ export function Menu() {
     <section id="main-menu">
       <div id="categories">
         {categories.map((categ) => (
-          <ul key={categ.id}>{categ.name}</ul>
+          <span key={categ.id}>{categ.name}</span>
         ))}
       </div>
       <button type="button" onClick={createCategory} disabled={loading}>+</button>
