@@ -4,8 +4,8 @@ export function Navbar(): ReactElement {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <a className="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="Icon de ardoise" />
+        <a className="navbar-item">
+          Ardoise
         </a>
 
         <a
